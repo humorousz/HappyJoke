@@ -13,6 +13,10 @@ import com.humorousz.networklib.httpclient.listener.RequestListener;
 import com.humorousz.networklib.httpclient.listener.StringBaseRequestListener;
 import com.humorousz.networklib.httpclient.response.HttpResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     static final String KEY = "5689ede0a2e303e045f8ada57b9239cb";
     Button button;
@@ -40,16 +44,38 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete(HttpResponse response) {
-                        final String res = response.getRequestUrl();
+                        final StringBuilder res = new StringBuilder();
+                        res.append("Code:"+response.getCode());
+                        res.append("\n"+"message:"+response.getMessage());
+                        try {
+                            res.append(parseJson(new JSONObject(response.getBody())));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                textView.setText(res);
+                                textView.setText(res.toString());
                             }
                         });
                     }
                 });
             }
         });
+    }
+
+    private String parseJson(JSONObject object) throws JSONException {
+        StringBuilder sb = new StringBuilder();
+        JSONArray list = object.optJSONArray("newslist");
+        for(int i=0;i<list.length();i++){
+            JSONObject item = list.getJSONObject(i);
+            String title = item.optString("title");
+            String id = item.optString("id");
+            String content = item.optString("content");
+            sb.append("\ntitle:"+title);
+            sb.append("\nid:"+id);
+            sb.append("\ncontent:"+content);
+        }
+        return sb.toString();
     }
 }

@@ -1,5 +1,6 @@
 package com.humorousz.networklib.httpclient.client;
 
+import com.humorousz.commonutils.log.Logger;
 import com.humorousz.networklib.httpclient.listener.BaseRequestListener;
 import com.humorousz.networklib.httpclient.response.HttpResponse;
 
@@ -53,7 +54,7 @@ public  class ZQHttpClient extends HttpClient{
         if(params != null){
             url = getRealGetUrl(url,params);
         }
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(url)
                 .build();
         Call call = mOkHttpClient.newCall(request);
@@ -71,6 +72,7 @@ public  class ZQHttpClient extends HttpClient{
                     HttpResponse rp = makeResponse(response);
                     listener.onComplete(listener.parse(rp));
                 }
+                Logger.e("MRZ",response.toString());
             }
         });
     }
@@ -78,7 +80,10 @@ public  class ZQHttpClient extends HttpClient{
     private HttpResponse makeResponse(Response response) throws IOException {
         HttpResponse rp ;
         rp = new HttpResponse.Builder()
+                .setCode(response.code())
+                .setMessage(response.message())
                 .setBody(response.body().string())
+                .setError(response.isSuccessful())
                 .setRequestUrl(response.request().url().toString())
                 .build();
         return rp;

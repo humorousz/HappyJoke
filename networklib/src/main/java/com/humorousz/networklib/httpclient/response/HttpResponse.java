@@ -5,15 +5,28 @@ package com.humorousz.networklib.httpclient.response;
  */
 
 public class HttpResponse {
+    private int code;
+    private String message;
     private String body;
     private boolean error = false;
     private String requestUrl;
 
-    HttpResponse(String body,boolean error,String requestUrl){
-        this.body = body;
-        this.error = error;
-        this.requestUrl = requestUrl;
+    HttpResponse(Builder builder){
+        this.code = builder.code;
+        this.message = builder.message;
+        this.body = builder.body;
+        this.error = builder.error;
+        this.requestUrl = builder.requestUrl;
     }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
     public String getBody() {
         return body;
     }
@@ -30,9 +43,22 @@ public class HttpResponse {
      * Builder
      */
     public static class Builder{
-        String body;
-        boolean error;
-        String requestUrl;
+        int code = -1;
+        String message ="";
+        String body="";
+        boolean error=false;
+        String requestUrl="";
+
+        public Builder setCode(int code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+
         public Builder setBody(String body) {
             this.body = body;
             return this;
@@ -48,8 +74,8 @@ public class HttpResponse {
             return this;
         }
 
-        public HttpResponse build(){
-            return new HttpResponse(this.body,this.error,this.requestUrl);
+        public HttpResponse build() {
+            return new HttpResponse(this);
         }
     }
 }
