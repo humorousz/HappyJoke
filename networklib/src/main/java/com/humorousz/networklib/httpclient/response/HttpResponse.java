@@ -7,10 +7,12 @@ package com.humorousz.networklib.httpclient.response;
 public class HttpResponse {
     private String body;
     private boolean error = false;
+    private String requestUrl;
 
-    HttpResponse(String body,boolean error){
+    HttpResponse(String body,boolean error,String requestUrl){
         this.body = body;
         this.error = error;
+        this.requestUrl = requestUrl;
     }
     public String getBody() {
         return body;
@@ -20,12 +22,17 @@ public class HttpResponse {
         return error;
     }
 
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
     /**
      * Builder
      */
     public static class Builder{
         String body;
         boolean error;
+        String requestUrl;
         public Builder setBody(String body) {
             this.body = body;
             return this;
@@ -36,8 +43,13 @@ public class HttpResponse {
             return this;
         }
 
+        public Builder setRequestUrl(String requestUrl) {
+            this.requestUrl = requestUrl;
+            return this;
+        }
+
         public HttpResponse build(){
-            return new HttpResponse(this.body,this.error);
+            return new HttpResponse(this.body,this.error,this.requestUrl);
         }
     }
 }

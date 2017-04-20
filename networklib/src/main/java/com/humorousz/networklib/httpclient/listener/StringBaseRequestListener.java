@@ -6,7 +6,7 @@ import com.humorousz.networklib.httpclient.response.HttpResponse;
  * Created by zhangzhiquan on 2017/4/16.
  */
 
-public abstract class StringRequestListener extends RequestListener<String>{
+public abstract class StringBaseRequestListener extends BaseRequestListener<String> {
 
     @Override
     public  String parse(HttpResponse response){

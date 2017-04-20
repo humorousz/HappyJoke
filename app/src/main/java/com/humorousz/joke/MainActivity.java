@@ -9,7 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.humorousz.networklib.httpclient.HttpClientProxy;
-import com.humorousz.networklib.httpclient.listener.StringRequestListener;
+import com.humorousz.networklib.httpclient.listener.RequestListener;
+import com.humorousz.networklib.httpclient.listener.StringBaseRequestListener;
+import com.humorousz.networklib.httpclient.response.HttpResponse;
 
 public class MainActivity extends AppCompatActivity {
     static final String KEY = "5689ede0a2e303e045f8ada57b9239cb";
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpClientProxy.getClient().getAsyn("https://api.tianapi.com/txapi/joke/?key=" + KEY, new StringRequestListener() {
+                HttpClientProxy.getClient().getAsyn("https://api.tianapi.com/txapi/joke/?key=" + KEY, new RequestListener() {
                     @Override
                     public void onFailure(Exception e) {
                        runOnUiThread(new Runnable() {
@@ -37,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onComplete(String response) {
-                        final String res = response;
+                    public void onComplete(HttpResponse response) {
+                        final String res = response.getRequestUrl();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

@@ -1,6 +1,6 @@
 package com.humorousz.networklib.httpclient.client;
 
-import com.humorousz.networklib.httpclient.listener.RequestListener;
+import com.humorousz.networklib.httpclient.listener.BaseRequestListener;
 import com.humorousz.networklib.httpclient.response.HttpResponse;
 
 import java.io.IOException;
@@ -49,7 +49,7 @@ public  class ZQHttpClient extends HttpClient{
 
 
     @Override
-    public void getAsyn(String url, Map<String, String> params, final RequestListener listener) {
+    public void getAsyn(String url, Map<String, String> params, final BaseRequestListener listener) {
         if(params != null){
             url = getRealGetUrl(url,params);
         }
@@ -79,6 +79,7 @@ public  class ZQHttpClient extends HttpClient{
         HttpResponse rp ;
         rp = new HttpResponse.Builder()
                 .setBody(response.body().string())
+                .setRequestUrl(response.request().url().toString())
                 .build();
         return rp;
     }
