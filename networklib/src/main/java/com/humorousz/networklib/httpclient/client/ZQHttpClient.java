@@ -77,7 +77,14 @@ public  class ZQHttpClient extends HttpClient{
         });
     }
 
-    private HttpResponse makeResponse(Response response) throws IOException {
+    @Override
+    public <T> HttpResponse makeResponse(T response) throws IOException {
+        return createResponse((Response)response);
+    }
+
+
+
+    public HttpResponse createResponse(Response response) throws IOException {
         HttpResponse rp ;
         rp = new HttpResponse.Builder()
                 .setCode(response.code())

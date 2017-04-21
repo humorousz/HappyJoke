@@ -2,7 +2,9 @@ package com.humorousz.networklib.httpclient.client;
 
 
 import com.humorousz.networklib.httpclient.listener.BaseRequestListener;
+import com.humorousz.networklib.httpclient.response.HttpResponse;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -46,6 +48,15 @@ public abstract class HttpClient {
      */
     public abstract void getAsyn(String url,Map<String,String> params,BaseRequestListener listener);
 
+
+    /**
+     * 创建返回给调用者的Response
+     * @param response
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public abstract <T> HttpResponse makeResponse(T response) throws IOException;
     /**
      * 拼接get的url
      * @param url
