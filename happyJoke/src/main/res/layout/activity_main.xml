@@ -5,22 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.humorousz.joke.MainActivity">
-
-    <TextView
-        android:id="@+id/res_textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello World!"
-        android:visibility="gone"/>
-    <Button
-        android:id="@+id/commit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="数据"
-        android:layout_alignParentBottom="true"/>
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/commit_btn"></FrameLayout>
+        android:layout_height="match_parent"></FrameLayout>
 </RelativeLayout>

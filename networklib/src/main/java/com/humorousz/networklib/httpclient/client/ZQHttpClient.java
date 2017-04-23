@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -67,10 +68,16 @@ public  class ZQHttpClient extends HttpClient{
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response){
                 if(listener != null){
-                    HttpResponse rp = makeResponse(response);
-                    listener.onComplete(listener.parse(rp));
+                    try {
+                        HttpResponse rp;
+                        rp = makeResponse(response);
+                        listener.onComplete(listener.parse(rp));
+                    } catch (IOException e) {
+                        listener.onFailure(e);
+                    }
+
                 }
                 Logger.e("MRZ",response.toString());
             }

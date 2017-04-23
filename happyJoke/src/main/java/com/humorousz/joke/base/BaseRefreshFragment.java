@@ -53,6 +53,11 @@ public abstract class BaseRefreshFragment extends BaseFragment {
         mContentView.addView(child);
     }
 
+    protected void startRefresh(){
+        mRefreshlayout.setRefreshing(true);
+        refresh();
+    }
+
     protected void stopRefresh(){
         mRefreshlayout.setRefreshing(false);
     }

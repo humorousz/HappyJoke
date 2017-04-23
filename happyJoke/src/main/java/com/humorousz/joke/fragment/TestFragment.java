@@ -25,6 +25,12 @@ public class TestFragment extends BaseRefreshFragment {
     @Override
     public void initView(View root) {
         mText = (TextView) root.findViewById(R.id.textView);
+        mText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startRefresh();
+            }
+        },1000);
     }
 
     @Override
