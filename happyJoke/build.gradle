@@ -29,4 +29,5 @@ dependencies {
     compile project(':networklib')
     compile project(':commonutils')
     compile 'com.android.support:recyclerview-v7:25+'
+    testCompile 'org.json:json:20140107'
 }

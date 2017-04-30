@@ -13,11 +13,16 @@ import java.util.List;
  */
 
 public class JokeModel implements Serializable ,IJokeModel{
+    private static final String TAG = "JokeModel";
     public List<JokeItem> newslist;
 
     @Override
     public JokeModel getModel() {
         return this;
+    }
+
+    public JokeModel(){
+
     }
 
     public JokeModel(JSONObject object){
@@ -68,4 +73,13 @@ public class JokeModel implements Serializable ,IJokeModel{
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<this.newslist.size();i++){
+            JokeItem item = newslist.get(i);
+            sb.append("id"+item.id+" title:"+item.title+"\n");
+        }
+        return sb.toString();
+    }
 }

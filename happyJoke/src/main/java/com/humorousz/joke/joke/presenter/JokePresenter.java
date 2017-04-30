@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.humorousz.commonutils.log.JsonTools;
+import com.humorousz.commonutils.log.Logger;
 import com.humorousz.joke.joke.model.IJokeModel;
 import com.humorousz.joke.joke.model.JokeModel;
 import com.humorousz.joke.joke.view.IJokeView;
@@ -22,6 +24,7 @@ import java.util.HashMap;
  */
 
 public class JokePresenter implements IJokePresenter{
+    private static final String TAG = "JokePresenter";
     static final String KEY = "5689ede0a2e303e045f8ada57b9239cb";
     private static int SUCCESS = 1;
     private static int FAIL = 0;
@@ -41,7 +44,7 @@ public class JokePresenter implements IJokePresenter{
     public void request() {
         HashMap<String,String> params = new HashMap<>();
         params.put("key",KEY);
-        params.put("num",String.valueOf(20));
+        params.put("num",String.valueOf(1));
         HttpClientProxy.getClient().getAsyn("https://api.tianapi.com/txapi/joke/", params, new RequestListener() {
             @Override
             public void onFailure(Exception e) {
@@ -51,7 +54,9 @@ public class JokePresenter implements IJokePresenter{
             @Override
             public void onComplete(HttpResponse response) {
                 try {
-                    IJokeModel model = new JokeModel(new JSONObject(response.getBody()));
+                    IJokeModel model = JsonTools.parse(new JSONObject(response.getBody()),JokeModel.class);
+//                    Logger.e(TAG,model.toString());
+                    Logger.e(TAG,response.getBody());
                     mJokeView.updateView(model);
                 } catch (JSONException e) {
                     e.printStackTrace();
