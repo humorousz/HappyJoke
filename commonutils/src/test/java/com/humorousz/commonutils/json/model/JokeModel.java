@@ -1,11 +1,6 @@
-package com.humorousz.joke.joke.model;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.humorousz.commonutils.json.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,11 +1,5 @@
 package com.humorousz.joke;
 
-import com.humorousz.commonutils.log.JsonTools;
-import com.humorousz.joke.joke.model.IJokeModel;
-import com.humorousz.joke.joke.model.JokeModel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -22,11 +16,4 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void parseJson_isCorrect() throws JSONException {
-        JSONObject obj = new JSONObject(jsonString);
-        assertNotNull(obj.opt("code"));
-        IJokeModel model = JsonTools.parse(obj, JokeModel.class);
-        assertNotNull(model);
-    }
 }

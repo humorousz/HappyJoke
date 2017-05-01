@@ -1,4 +1,4 @@
-package com.humorousz.joke.joke.model;
+package com.humorousz.commonutils.json.model;
 
 
 import java.util.List;

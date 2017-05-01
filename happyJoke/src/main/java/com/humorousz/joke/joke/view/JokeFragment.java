@@ -68,7 +68,7 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
             @Override
             public void run() {
                 mlist.clear();
-                mlist.addAll(data.getModel().newslist);
+                mlist.addAll(data.getJokeItems());
                 mAdapter.notifyDataSetChanged();
                 stopRefresh();
                 Logger.e("MRZ","data size:"+data.getModel().newslist.size());

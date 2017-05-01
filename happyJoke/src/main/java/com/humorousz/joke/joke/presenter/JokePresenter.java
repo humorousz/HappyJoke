@@ -1,11 +1,8 @@
 package com.humorousz.joke.joke.presenter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 
-import com.humorousz.commonutils.log.JsonTools;
+import com.humorousz.commonutils.log.json.JsonTools;
 import com.humorousz.commonutils.log.Logger;
 import com.humorousz.joke.joke.model.IJokeModel;
 import com.humorousz.joke.joke.model.JokeModel;
@@ -44,7 +41,7 @@ public class JokePresenter implements IJokePresenter{
     public void request() {
         HashMap<String,String> params = new HashMap<>();
         params.put("key",KEY);
-        params.put("num",String.valueOf(1));
+        params.put("num",String.valueOf(20));
         HttpClientProxy.getClient().getAsyn("https://api.tianapi.com/txapi/joke/", params, new RequestListener() {
             @Override
             public void onFailure(Exception e) {
@@ -53,15 +50,9 @@ public class JokePresenter implements IJokePresenter{
 
             @Override
             public void onComplete(HttpResponse response) {
-                try {
-                    IJokeModel model = JsonTools.parse(new JSONObject(response.getBody()),JokeModel.class);
-//                    Logger.e(TAG,model.toString());
-                    Logger.e(TAG,response.getBody());
-                    mJokeView.updateView(model);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    mJokeView.setFailView();
-                }
+                IJokeModel model = JsonTools.parse(response.getBody(), JokeModel.class);
+                Logger.e(TAG, response.getBody());
+                mJokeView.updateView(model);
             }
         });
     }
