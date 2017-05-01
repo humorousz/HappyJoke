@@ -1,4 +1,4 @@
-package com.humorousz.commonutils.log.json;
+package com.humorousz.commonutils.json;
 
 import org.json.JSONObject;
 

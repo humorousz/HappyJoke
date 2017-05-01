@@ -2,7 +2,7 @@ package com.humorousz.joke.joke.presenter;
 
 import android.content.Context;
 
-import com.humorousz.commonutils.log.json.JsonTools;
+import com.humorousz.commonutils.json.JsonTools;
 import com.humorousz.commonutils.log.Logger;
 import com.humorousz.joke.joke.model.IJokeModel;
 import com.humorousz.joke.joke.model.JokeModel;
@@ -10,9 +10,6 @@ import com.humorousz.joke.joke.view.IJokeView;
 import com.humorousz.networklib.httpclient.HttpClientProxy;
 import com.humorousz.networklib.httpclient.listener.RequestListener;
 import com.humorousz.networklib.httpclient.response.HttpResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 

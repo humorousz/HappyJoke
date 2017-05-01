@@ -4,7 +4,7 @@ import com.humorousz.commonutils.json.model.IJokeModel;
 import com.humorousz.commonutils.json.model.JokeModel;
 import com.humorousz.commonutils.json.model.Person;
 import com.humorousz.commonutils.json.model.Team;
-import com.humorousz.commonutils.log.json.JsonTools;
+import com.humorousz.commonutils.json.JsonTools;
 
 import org.json.JSONException;
 import org.junit.Test;
