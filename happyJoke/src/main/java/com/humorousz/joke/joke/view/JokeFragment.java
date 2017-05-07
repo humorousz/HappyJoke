@@ -35,8 +35,19 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.joke_fragment,container,false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
     }
 
     @Override
@@ -48,6 +59,7 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
         mLayoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new JokeItemDecoration());
     }
 
     @Override
@@ -78,6 +90,6 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
 
     @Override
     public void setFailView() {
-
+        stopRefresh();
     }
 }

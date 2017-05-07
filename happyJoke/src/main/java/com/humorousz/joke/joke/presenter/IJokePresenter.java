@@ -5,6 +5,7 @@ package com.humorousz.joke.joke.presenter;
  */
 
 public interface IJokePresenter {
+    void onResume();
     void refresh();
     void request();
 }

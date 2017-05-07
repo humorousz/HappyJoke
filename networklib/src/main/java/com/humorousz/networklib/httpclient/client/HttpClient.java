@@ -7,6 +7,7 @@ import com.humorousz.networklib.httpclient.response.HttpResponse;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zhangzhiquan on 2017/4/16.
@@ -46,7 +47,32 @@ public abstract class HttpClient {
      * @param params
      * @param listener
      */
-    public abstract void getAsyn(String url,Map<String,String> params,BaseRequestListener listener);
+    public  void getAsyn(String url,Map<String,String> params,BaseRequestListener listener){
+        getAsyn(url,params,listener,0);
+    }
+
+    /**
+     * 功能同上，可以设置使用最近多久以内的缓存
+     * @param url
+     * @param params
+     * @param listener
+     * @param cacheTime
+     */
+
+
+    public  void getAsyn(String url,Map<String,String> params,BaseRequestListener listener,int cacheTime){
+        getAsyn(url,params,listener,cacheTime,TimeUnit.SECONDS);
+    }
+
+    /**
+     * 功能同上，可以设置缓存时间的TimeUnit
+     * @param url
+     * @param params
+     * @param listener
+     * @param cacheTime
+     * @param timeUnit
+     */
+    public abstract void getAsyn(String url, Map<String,String> params, BaseRequestListener listener, int cacheTime, TimeUnit timeUnit);
 
 
     /**
@@ -63,7 +89,7 @@ public abstract class HttpClient {
      * @param params
      * @return
      */
-    protected String getRealGetUrl(String url,Map<String,String> params){
+    protected final String getRealGetUrl(String url,Map<String,String> params){
         StringBuilder builder = new StringBuilder(url);
         builder.append("?");
         Iterator<Map.Entry<String,String>> it = params.entrySet().iterator();

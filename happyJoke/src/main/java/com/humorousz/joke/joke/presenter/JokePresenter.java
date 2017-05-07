@@ -1,15 +1,20 @@
 package com.humorousz.joke.joke.presenter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 
 import com.humorousz.commonutils.json.JsonTools;
 import com.humorousz.commonutils.log.Logger;
+import com.humorousz.commonutils.service.CommonService;
 import com.humorousz.joke.joke.model.IJokeModel;
 import com.humorousz.joke.joke.model.JokeModel;
 import com.humorousz.joke.joke.view.IJokeView;
 import com.humorousz.networklib.httpclient.HttpClientProxy;
 import com.humorousz.networklib.httpclient.listener.RequestListener;
 import com.humorousz.networklib.httpclient.response.HttpResponse;
+import com.humorousz.networklib.networkutils.NetWorkUtils;
 
 import java.util.HashMap;
 
@@ -24,9 +29,29 @@ public class JokePresenter implements IJokePresenter{
     private static int FAIL = 0;
     private Context mContext;
     private IJokeView mJokeView;
+    private Handler mHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == 0x01){
+                IJokeModel model = (IJokeModel) msg.obj;
+                mJokeView.updateView(model);
+            }else {
+                mJokeView.setFailView();
+            }
+        }
+    };
     public JokePresenter(Context context, IJokeView jokeView){
         this.mContext = context;
         this.mJokeView = jokeView;
+    }
+
+    @Override
+    public void onResume() {
+        Logger.e(TAG, "is netConnected:"+NetWorkUtils.isNetWorkConnected());
+        Logger.e(TAG, "is wifi connected:"+NetWorkUtils.isWifiConnected());
+        Logger.e(TAG, "is mobile connected:"+NetWorkUtils.isMobileConnected());
+        Logger.e(TAG, "is 4G connected:"+NetWorkUtils.isNet4GConnected());
+        Logger.e(TAG, "is 3G connected:"+NetWorkUtils.isNet3GConnected());
     }
 
     @Override
@@ -36,21 +61,26 @@ public class JokePresenter implements IJokePresenter{
 
     @Override
     public void request() {
-        HashMap<String,String> params = new HashMap<>();
+        final HashMap<String,String> params = new HashMap<>();
         params.put("key",KEY);
         params.put("num",String.valueOf(20));
         HttpClientProxy.getClient().getAsyn("https://api.tianapi.com/txapi/joke/", params, new RequestListener() {
             @Override
             public void onFailure(Exception e) {
-                mJokeView.setFailView();
+                Message message = mHandler.obtainMessage();
+                message.what = 0x02;
+                mHandler.sendMessage(message);
             }
 
             @Override
             public void onComplete(HttpResponse response) {
                 IJokeModel model = JsonTools.parse(response.getBody(), JokeModel.class);
                 Logger.e(TAG, response.getBody());
-                mJokeView.updateView(model);
+                Message message = mHandler.obtainMessage();
+                message.what = 0x01;
+                message.obj = model;
+                mHandler.sendMessage(message);
             }
-        });
+        },10);
     }
 }
