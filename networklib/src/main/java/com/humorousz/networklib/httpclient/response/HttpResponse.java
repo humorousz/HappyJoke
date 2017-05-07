@@ -8,14 +8,14 @@ public class HttpResponse {
     private int code;
     private String message;
     private String body;
-    private boolean error = false;
+    private boolean successful = false;
     private String requestUrl;
 
     HttpResponse(Builder builder){
         this.code = builder.code;
         this.message = builder.message;
         this.body = builder.body;
-        this.error = builder.error;
+        this.successful = builder.successful;
         this.requestUrl = builder.requestUrl;
     }
 
@@ -31,8 +31,8 @@ public class HttpResponse {
         return body;
     }
 
-    public boolean isError() {
-        return error;
+    public boolean isSuccessful() {
+        return successful;
     }
 
     public String getRequestUrl() {
@@ -46,7 +46,7 @@ public class HttpResponse {
         int code = -1;
         String message ="";
         String body="";
-        boolean error=false;
+        boolean successful =false;
         String requestUrl="";
 
         public Builder setCode(int code) {
@@ -64,8 +64,8 @@ public class HttpResponse {
             return this;
         }
 
-        public Builder setError(boolean error) {
-            this.error = error;
+        public Builder setSuccessful(boolean error) {
+            this.successful = error;
             return this;
         }
 

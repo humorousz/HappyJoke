@@ -36,6 +36,7 @@ public class JokePresenter implements IJokePresenter{
                 IJokeModel model = (IJokeModel) msg.obj;
                 mJokeView.updateView(model);
             }else {
+                Logger.e(TAG,"error msg:"+msg.obj);
                 mJokeView.setFailView();
             }
         }
@@ -69,6 +70,7 @@ public class JokePresenter implements IJokePresenter{
             public void onFailure(Exception e) {
                 Message message = mHandler.obtainMessage();
                 message.what = 0x02;
+                message.obj = e.getMessage();
                 mHandler.sendMessage(message);
             }
 

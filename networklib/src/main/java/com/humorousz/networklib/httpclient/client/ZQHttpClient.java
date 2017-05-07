@@ -87,7 +87,11 @@ public  class ZQHttpClient extends HttpClient{
                     try {
                         HttpResponse rp;
                         rp = makeResponse(response);
-                        listener.onComplete(listener.parse(rp));
+                        if(!rp.isSuccessful()){
+                            listener.onFailure(new Exception(rp.getMessage()));
+                        }else{
+                            listener.onComplete(listener.parse(rp));
+                        }
                     } catch (IOException e) {
                         listener.onFailure(e);
                     }
@@ -111,7 +115,7 @@ public  class ZQHttpClient extends HttpClient{
                 .setCode(response.code())
                 .setMessage(response.message())
                 .setBody(response.body().string())
-                .setError(response.isSuccessful())
+                .setSuccessful(response.isSuccessful())
                 .setRequestUrl(response.request().url().toString())
                 .build();
         return rp;
