@@ -48,11 +48,6 @@ public class JokePresenter implements IJokePresenter{
 
     @Override
     public void onResume() {
-        Logger.e(TAG, "is netConnected:"+NetWorkUtils.isNetWorkConnected());
-        Logger.e(TAG, "is wifi connected:"+NetWorkUtils.isWifiConnected());
-        Logger.e(TAG, "is mobile connected:"+NetWorkUtils.isMobileConnected());
-        Logger.e(TAG, "is 4G connected:"+NetWorkUtils.isNet4GConnected());
-        Logger.e(TAG, "is 3G connected:"+NetWorkUtils.isNet3GConnected());
     }
 
     @Override

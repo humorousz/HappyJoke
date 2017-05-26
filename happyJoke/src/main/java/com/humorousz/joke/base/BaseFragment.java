@@ -18,7 +18,13 @@ import com.humorousz.commonutils.log.Logger;
 
 
 public abstract class BaseFragment extends Fragment {
+    //是否可见
+    protected boolean visible;
+    //标志位，标志fragment已经初始化完成
+    public  boolean prepared;
 
+    protected boolean firstVisible = true;
+    protected boolean firstInvisible = true;
 
     public BaseFragment() {
         // Required empty public constructor
@@ -99,6 +105,34 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            if(firstVisible){
+                firstVisible = false;
+                initPrepare();
+            }else {
+                onVisible();
+            }
+        }else {
+            if(firstInvisible){
+                firstInvisible = false;
+                onFirstInvisible();
+            }else {
+                onInVisible();
+            }
+        }
+    }
+
+    public synchronized void initPrepare(){
+        if(!prepared){
+            onFirstVisible();
+        }else {
+            prepared = true;
+        }
+    }
+
     public abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     public abstract void initView(View root);
@@ -108,6 +142,22 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean logLife(){
         return false;
+    }
+
+    protected void onVisible(){
+
+    }
+
+    protected void onInVisible(){
+
+    }
+
+    protected void onFirstVisible(){
+
+    }
+
+    protected void onFirstInvisible(){
+
     }
 
 
