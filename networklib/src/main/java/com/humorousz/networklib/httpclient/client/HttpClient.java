@@ -91,7 +91,11 @@ public abstract class HttpClient {
      */
     protected final String getRealGetUrl(String url,Map<String,String> params){
         StringBuilder builder = new StringBuilder(url);
-        builder.append("?");
+        if(!url.contains("?")){
+            builder.append("?");
+        }else if(url.contains("?") && !(url.charAt(url.length()-1) == '&')){
+            builder.append("&");
+        }
         Iterator<Map.Entry<String,String>> it = params.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<String,String> entry = it.next();
