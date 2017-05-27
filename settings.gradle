@@ -1,1 +1,1 @@
-include ':happyJoke', ':networklib', ':commonutils'
+include ':happyJoke', ':networklib', ':commonutils', ':uiutils'

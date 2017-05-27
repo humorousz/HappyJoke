@@ -34,7 +34,7 @@ public class JokeItemDecoration extends BaseItemDecoration{
 
     @Override
     protected int getItemDecorationInsetValue(int position, int type) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2, JokeApplication.getInstance().getResources().getDisplayMetrics());
+        return 1;
     }
 
     @Override

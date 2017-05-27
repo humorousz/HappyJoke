@@ -1,10 +1,15 @@
 package com.humorousz.joke.joke.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +23,7 @@ import com.humorousz.joke.joke.model.IJokeModel;
 import com.humorousz.joke.joke.model.JokeModel;
 import com.humorousz.joke.joke.presenter.IJokePresenter;
 import com.humorousz.joke.joke.presenter.JokePresenter;
+import com.humorousz.uiutils.helper.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +74,7 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new JokeItemDecoration());
         mRecyclerView.addOnScrollListener(mListener);
+        registerForContextMenu(mRecyclerView);
     }
 
     RecyclerViewStateListener mListener = new RecyclerViewStateListener() {
@@ -78,7 +85,8 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
 
         @Override
         public void reachBottom() {
-
+            mPresenter.request();
+            isPullExecute = false;
         }
 
         @Override
@@ -121,5 +129,27 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
     @Override
     public void setFailView() {
         stopRefresh();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int position;
+        String message;
+        try{
+            position = mAdapter.getPosition();
+            message = mAdapter.getJokeString(position);
+        }catch (Exception e){
+            return super.onContextItemSelected(item);
+        }
+
+        switch (item.getItemId()){
+            case R.id.copy:
+                ClipboardManager cmb = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData data =  ClipData.newPlainText("",message);
+                cmb.setPrimaryClip(data);
+                ToastUtil.showToast(getContext(),"成功");
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }

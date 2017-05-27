@@ -25,6 +25,7 @@ import java.util.HashMap;
 public class JokePresenter implements IJokePresenter{
     private static final String TAG = "JokePresenter";
     static final String KEY = "5689ede0a2e303e045f8ada57b9239cb";
+    private int page = 1;
     private static int SUCCESS = 1;
     private static int FAIL = 0;
     private Context mContext;
@@ -52,6 +53,7 @@ public class JokePresenter implements IJokePresenter{
 
     @Override
     public void refresh() {
+        page = 1;
         request();
     }
 
@@ -60,6 +62,7 @@ public class JokePresenter implements IJokePresenter{
         final HashMap<String,String> params = new HashMap<>();
         params.put("key",KEY);
         params.put("num",String.valueOf(20));
+        params.put("page",String.valueOf(page++));
         HttpClientProxy.getClient().getAsyn("https://api.tianapi.com/txapi/joke/", params, new RequestListener() {
             @Override
             public void onFailure(Exception e) {

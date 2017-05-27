@@ -2,7 +2,9 @@ package com.humorousz.joke.joke.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ public class JokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<JokeModel.JokeItem> mList;
     private FooterViewHolder.FooterState mFooterState;
 
+    private int position;
+
     public JokeAdapter(List<JokeModel.JokeItem> list) {
         this.mList = list;
     }
@@ -46,12 +50,19 @@ public class JokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_JOKE:
                 if (holder instanceof ViewHolder) {
                     JokeModel.JokeItem item = mList.get(position);
                     ((ViewHolder) holder).bindData(item);
+                    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            setPosition(holder.getLayoutPosition());
+                            return false;
+                        }
+                    });
                 }
                 break;
             case TYPE_FOOTER:
@@ -80,6 +91,12 @@ public class JokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return super.getItemViewType(position);
     }
 
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        holder.itemView.setOnLongClickListener(null);
+        super.onViewRecycled(holder);
+    }
+
     public void addData(List<JokeModel.JokeItem> list) {
         if (mList == null) {
             mList = new ArrayList<>();
@@ -101,18 +118,45 @@ public class JokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyItemChanged(itemCount > 0 ? itemCount - 1 : -1);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public String getJokeString(int position){
+        if(position >= mList.size())
+            return null;
+        JokeModel.JokeItem item = mList.get(position);
+        StringBuilder  stringBuilder = new StringBuilder();
+        stringBuilder.append(item.title);
+        stringBuilder.append("\n");
+        stringBuilder.append(item.content);
+        return stringBuilder.toString();
+    }
+
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView title, content;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.joke_title);
             content = (TextView) itemView.findViewById(R.id.joke_content);
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         public void bindData(JokeModel.JokeItem item) {
             title.setText(item.title);
             content.setText(Html.fromHtml(item.content));
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(Menu.NONE,R.id.copy,Menu.NONE,"复制内容");
         }
     }
 }
