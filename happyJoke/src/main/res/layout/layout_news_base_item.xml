@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/round_background">
 
     <ImageView
         android:id="@+id/image_pic"
@@ -33,6 +34,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_above="@id/text_tag"
+        android:textColor="@android:color/black"
         android:layout_marginRight="@dimen/title_text_margin_right"
         android:textSize="@dimen/text_size_normal"
         android:maxLines="2"

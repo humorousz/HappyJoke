@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.humorousz.joke.application.JokeApplication;
 import com.humorousz.joke.base.BaseItemDecoration;
+import com.humorousz.uiutils.helper.UIUtils;
 
 /**
  * Created by zhangzhiquan on 2017/5/3.
@@ -25,20 +26,17 @@ public class LinearItemDecoration extends BaseItemDecoration{
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildLayoutPosition(view);
-        int count = parent.getChildCount();
         int type = parent.getAdapter().getItemViewType(position);
-        if(position != count-1){
-            outRect.set(0,0,0,getItemDecorationInsetValue(position,type));
-        }
+        outRect.set(0,0,0,getItemDecorationInsetValue(position,type));
     }
 
     @Override
     protected int getItemDecorationInsetValue(int position, int type) {
-        return 1;
+        return UIUtils.dip2px(3);
     }
 
     @Override
     protected Drawable getItemDecorationDrawable(int position, int type) {
-        return new ColorDrawable(Color.BLACK);
+        return new ColorDrawable(Color.parseColor("#f1f1f1"));
     }
 }

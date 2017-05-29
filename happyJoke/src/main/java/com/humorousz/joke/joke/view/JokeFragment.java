@@ -55,9 +55,6 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
     public void onResume() {
         super.onResume();
         mPresenter.onResume();
-        if(firstVisible){
-            startRefresh();
-        }
     }
 
     @Override

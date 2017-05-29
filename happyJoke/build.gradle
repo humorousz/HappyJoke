@@ -29,5 +29,6 @@ dependencies {
     compile project(':networklib')
     compile project(':commonutils')
     compile 'com.android.support:recyclerview-v7:25+'
+    compile 'com.android.support:design:25+'
     compile project(':uiutils')
 }

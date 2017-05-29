@@ -51,6 +51,9 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
     @Override
     public void onResume() {
         super.onResume();
+        if(!prepared){
+            startRefresh();
+        }
     }
 
     @Override
