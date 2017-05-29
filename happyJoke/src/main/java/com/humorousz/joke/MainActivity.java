@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mFramgemt = NewsFragment.newInstance(INewsPresenter.TYPE.GUONEI);
+        mFramgemt = NewsFragment.newInstance(INewsPresenter.TYPE.HUABIAN);
         mContainer = (FrameLayout) findViewById(R.id.container);
         FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
         tr.add(R.id.container,mFramgemt);

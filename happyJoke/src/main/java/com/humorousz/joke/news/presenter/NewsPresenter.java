@@ -90,6 +90,8 @@ public class NewsPresenter implements INewsPresenter {
         switch (type){
             case GUONEI:
                 return RequestAPI.getInstance().GET_GUONEI;
+            case HUABIAN:
+                return RequestAPI.getInstance().GET_HUABIAN;
         }
 
         return null;

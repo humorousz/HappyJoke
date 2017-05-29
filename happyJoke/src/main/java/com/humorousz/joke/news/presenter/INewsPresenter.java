@@ -6,7 +6,7 @@ package com.humorousz.joke.news.presenter;
 
 public interface INewsPresenter {
     enum TYPE{
-        GUONEI
+        GUONEI,HUABIAN
     }
     void refresh(TYPE type);
     void request(TYPE type);

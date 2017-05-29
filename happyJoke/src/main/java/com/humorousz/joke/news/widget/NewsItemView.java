@@ -1,6 +1,8 @@
 package com.humorousz.joke.news.widget;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.humorousz.joke.R;
+import com.humorousz.joke.helper.ActivityLaunchHelper;
 import com.humorousz.joke.news.model.NewsModel;
 import com.humorousz.uiutils.helper.ImageLoaderHelper;
 
@@ -16,11 +19,12 @@ import com.humorousz.uiutils.helper.ImageLoaderHelper;
  * Created by zhangzhiquan on 2017/5/29.
  */
 
-public class NewsItemView extends RelativeLayout{
+public class NewsItemView extends RelativeLayout implements View.OnClickListener{
     private TextView mTitle;
     private ImageView mPic;
     private TextView mTag;
     private TextView mDate;
+    private String url;
     private Context mContext;
     public NewsItemView(Context context) {
         this(context,null);
@@ -57,6 +61,16 @@ public class NewsItemView extends RelativeLayout{
         if(data.ctime != null){
             mDate.setText(data.ctime);
         }
+        url = data.url;
+        setOnClickListener(this);
         ImageLoaderHelper.displayImage(data.picUrl,mPic);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(TextUtils.isEmpty(url)){
+            return;
+        }
+        ActivityLaunchHelper.launchWebView(mContext,url);
     }
 }
