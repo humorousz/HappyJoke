@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/image_pic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerInside"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/text_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_alignParentBottom="true"
+        android:text="中国传统文化"/>
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/text_tag"
+        android:text="2015-07-17"/>
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_above="@id/text_tag"
+        android:layout_marginRight="@dimen/title_text_margin_right"
+        android:textSize="@dimen/text_size_normal"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="那个抱走王明涵的，你上微信吗？看完这个你会心软吗？"/>
+
+</RelativeLayout>

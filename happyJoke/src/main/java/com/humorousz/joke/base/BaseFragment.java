@@ -101,7 +101,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void printLog(String methodName){
         if(logLife()){
-            Logger.d(getTitle(),methodName);
+            Logger.d(getLogTitle(),methodName);
         }
     }
 
@@ -138,7 +138,7 @@ public abstract class BaseFragment extends Fragment {
     public abstract void initView(View root);
 
 
-    public abstract String getTitle();
+    public abstract String getLogTitle();
 
     protected boolean logLife(){
         return false;

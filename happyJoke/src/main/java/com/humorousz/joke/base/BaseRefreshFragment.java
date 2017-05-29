@@ -18,6 +18,10 @@ public abstract class BaseRefreshFragment extends BaseFragment {
 
     private FrameLayout mContentView;
     private SwipeRefreshLayout mRefreshlayout;
+    /**
+     * 用于判断是否执行了下拉刷新
+     */
+    protected boolean isPullExecute;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

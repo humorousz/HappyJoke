@@ -10,6 +10,8 @@ import android.widget.FrameLayout;
 import com.humorousz.joke.base.BaseFragment;
 
 import com.humorousz.joke.joke.view.JokeFragment;
+import com.humorousz.joke.news.presenter.INewsPresenter;
+import com.humorousz.joke.news.view.NewsFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mFramgemt = new JokeFragment();
+        mFramgemt = NewsFragment.newInstance(INewsPresenter.TYPE.GUONEI);
         mContainer = (FrameLayout) findViewById(R.id.container);
         FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
         tr.add(R.id.container,mFramgemt);

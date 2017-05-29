@@ -65,7 +65,7 @@ public class TestFragment extends BaseRefreshFragment {
     }
 
     @Override
-    public String getTitle() {
+    public String getLogTitle() {
         return TAG;
     }
 

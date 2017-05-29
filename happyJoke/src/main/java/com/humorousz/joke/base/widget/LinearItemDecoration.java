@@ -1,4 +1,4 @@
-package com.humorousz.joke.joke.view;
+package com.humorousz.joke.base.widget;
 
 
 import android.app.UiAutomation;
@@ -18,9 +18,9 @@ import com.humorousz.joke.base.BaseItemDecoration;
  * Created by zhangzhiquan on 2017/5/3.
  */
 
-public class JokeItemDecoration extends BaseItemDecoration{
+public class LinearItemDecoration extends BaseItemDecoration{
 
-    private static final String TAG = "JokeItemDecoration";
+    private static final String TAG = "LinearItemDecoration";
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {

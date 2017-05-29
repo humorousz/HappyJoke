@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +17,7 @@ import com.humorousz.joke.R;
 import com.humorousz.joke.base.BaseRefreshFragment;
 import com.humorousz.joke.base.listener.RecyclerViewStateListener;
 import com.humorousz.joke.base.widget.FooterViewHolder;
+import com.humorousz.joke.base.widget.LinearItemDecoration;
 import com.humorousz.joke.joke.adapter.JokeAdapter;
 import com.humorousz.joke.joke.model.IJokeModel;
 import com.humorousz.joke.joke.model.JokeModel;
@@ -40,9 +40,6 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
     private  List<JokeModel.JokeItem> mlist;
     private IJokePresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    private boolean isPullExecute;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +69,7 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
         mLayoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new JokeItemDecoration());
+        mRecyclerView.addItemDecoration(new LinearItemDecoration());
         mRecyclerView.addOnScrollListener(mListener);
         registerForContextMenu(mRecyclerView);
     }
@@ -109,7 +106,7 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
     }
 
     @Override
-    public String getTitle() {
+    public String getLogTitle() {
         return TAG;
     }
 
