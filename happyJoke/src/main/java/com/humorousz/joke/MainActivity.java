@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new JokeFragment());
         fragments.add(NewsFragment.newInstance(INewsPresenter.TYPE.HUABIAN));
         fragments.add(NewsFragment.newInstance(INewsPresenter.TYPE.GUONEI));
-        fragments.add(new JokeFragment());
         mAdapter = new HomePagerAdapter(getSupportFragmentManager(),fragments);
         mFragmentPager.setAdapter(mAdapter);
         mFragmentPager.setOffscreenPageLimit(4);

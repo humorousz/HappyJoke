@@ -25,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean firstVisible = true;
     protected boolean firstInvisible = true;
+    protected boolean destoryView = false;
 
     public BaseFragment() {
         // Required empty public constructor
@@ -93,6 +94,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         printLog("onDestroyView");
         super.onDestroyView();
+        destoryView = true;
     }
 
     @Override

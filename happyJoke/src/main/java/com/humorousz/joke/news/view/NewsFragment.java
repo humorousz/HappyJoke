@@ -23,7 +23,7 @@ import com.humorousz.joke.news.presenter.NewsPresenter;
  * Created by zhangzhiquan on 2017/5/27.
  */
 
-public class NewsFragment extends BaseRefreshFragment implements INewsView{
+public class NewsFragment extends BaseRefreshFragment implements INewsView {
     private static final String TAG = "NewsFragment";
     private RecyclerView mRecyclerView;
     private NewsAdapter mAdapter;
@@ -36,15 +36,15 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
     public static NewsFragment newInstance(INewsPresenter.TYPE type) {
 
         Bundle args = new Bundle();
-        args.putSerializable("type",type);
+        args.putSerializable("type", type);
         NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
         fragment.setTitle(getTitle(type));
         return fragment;
     }
 
-    private static String getTitle(INewsPresenter.TYPE type){
-        switch (type){
+    private static String getTitle(INewsPresenter.TYPE type) {
+        switch (type) {
             case GUONEI:
                 return "国内";
             case HUABIAN:
@@ -54,10 +54,9 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
         }
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         mTitle = title;
     }
-
 
 
     @Override
@@ -73,12 +72,26 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
 
     @Override
     protected void onFirstVisible() {
-       startRefresh();
+        Logger.d(TAG, mTitle + "onFirstVisible");
+        startRefresh();
     }
 
     @Override
-    protected boolean logLife() {
-        return true;
+    protected void onFirstInvisible() {
+        Logger.d(TAG, mTitle + "onFirstInvisible");
+        super.onFirstInvisible();
+    }
+
+    @Override
+    protected void onVisible() {
+        Logger.d(TAG, mTitle + "onVisible:" + init);
+        super.onVisible();
+    }
+
+    @Override
+    protected void onInVisible() {
+        Logger.d(TAG, mTitle + "onInVisible");
+        super.onInVisible();
     }
 
     @Override
@@ -89,7 +102,7 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
 
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_news_base_fragment,container,false);
+        return inflater.inflate(R.layout.layout_news_base_fragment, container, false);
     }
 
     @Override
@@ -97,7 +110,7 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
         mRecyclerView = (RecyclerView) root.findViewById(R.id.news_recycler_view);
         mPresenter = new NewsPresenter(this);
         mAdapter = new NewsAdapter();
-        mLayoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL,false);
+        mLayoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new LinearItemDecoration());
         mRecyclerView.addOnScrollListener(mListener);
@@ -125,26 +138,25 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
 
     @Override
     public String getLogTitle() {
-        return TAG+" "+mType;
+        return TAG;
     }
 
     @Override
     public String getTitle() {
-        Logger.e(TAG,"ss:"+(mType==null));
         return mTitle;
     }
 
     @Override
     public void updateView(INewsModel data) {
-        if(isPullExecute){
+        if (isPullExecute) {
             isPullExecute = false;
             mAdapter.resetData(data.getNewsItems());
             stopRefresh();
-        }else {
+        } else {
             mAdapter.addData(data.getNewsItems());
         }
         mAdapter.updateFooterViewState(FooterViewHolder.FooterState.FOOTER_STATE_HAS_NEXT_PAGE);
-        Logger.e("MRZ","data size:"+data.getModel().newslist.size());
+        Logger.e("MRZ", "data size:" + data.getModel().newslist.size());
     }
 
     @Override

@@ -76,4 +76,11 @@ public abstract class BaseRefreshFragment extends BaseFragment {
         }
     }
 
+    @Override
+    protected void onVisible() {
+        if(destoryView){
+            destoryView = false;
+            startRefresh();
+        }
+    }
 }
