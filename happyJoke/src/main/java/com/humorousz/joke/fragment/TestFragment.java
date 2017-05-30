@@ -70,6 +70,11 @@ public class TestFragment extends BaseRefreshFragment {
     }
 
     @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
     protected boolean logLife() {
         return true;
     }

@@ -30,17 +30,35 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
     private INewsPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
     private INewsPresenter.TYPE mType;
+    private String mTitle;
 
 
     public static NewsFragment newInstance(INewsPresenter.TYPE type) {
 
         Bundle args = new Bundle();
         args.putSerializable("type",type);
-
         NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
+        fragment.setTitle(getTitle(type));
         return fragment;
     }
+
+    private static String getTitle(INewsPresenter.TYPE type){
+        switch (type){
+            case GUONEI:
+                return "国内";
+            case HUABIAN:
+                return "娱乐花边";
+            default:
+                return "新闻";
+        }
+    }
+
+    public void setTitle(String title){
+        mTitle = title;
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +69,16 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
     @Override
     public void onResume() {
         super.onResume();
-        if(!prepared){
-            startRefresh();
-        }
+    }
+
+    @Override
+    protected void onFirstVisible() {
+       startRefresh();
+    }
+
+    @Override
+    protected boolean logLife() {
+        return true;
     }
 
     @Override
@@ -77,6 +102,7 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
         mRecyclerView.addItemDecoration(new LinearItemDecoration());
         mRecyclerView.addOnScrollListener(mListener);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        setPrepared(true);
     }
 
     RecyclerViewStateListener mListener = new RecyclerViewStateListener() {
@@ -99,7 +125,13 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView{
 
     @Override
     public String getLogTitle() {
-        return TAG;
+        return TAG+" "+mType;
+    }
+
+    @Override
+    public String getTitle() {
+        Logger.e(TAG,"ss:"+(mType==null));
+        return mTitle;
     }
 
     @Override

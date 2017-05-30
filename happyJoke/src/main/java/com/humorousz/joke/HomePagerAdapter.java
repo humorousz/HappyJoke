@@ -1,9 +1,10 @@
 package com.humorousz.joke;
 
-import android.content.Context;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.humorousz.joke.base.BaseFragment;
 
@@ -14,7 +15,6 @@ import java.util.List;
  */
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
-    private String[] tableTitle = new String[]{"娱乐","国内","笑话"};
     private List<BaseFragment> mFragments;
     public HomePagerAdapter(FragmentManager fm,List<BaseFragment> fragments) {
         super(fm);
@@ -40,6 +40,11 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         if(mFragments == null || mFragments.size() <= position){
             return null;
         }
-        return tableTitle[position];
+        return mFragments.get(position).getTitle();
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
     }
 }

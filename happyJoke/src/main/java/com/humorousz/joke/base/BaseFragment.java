@@ -18,10 +18,10 @@ import com.humorousz.commonutils.log.Logger;
 
 
 public abstract class BaseFragment extends Fragment {
-    //是否可见
-    protected boolean visible;
     //标志位，标志fragment已经初始化完成
     public  boolean prepared;
+    //标志位，是否执行了init
+    protected boolean init = false;
 
     protected boolean firstVisible = true;
     protected boolean firstInvisible = true;
@@ -67,6 +67,14 @@ public abstract class BaseFragment extends Fragment {
     public void onResume() {
         printLog("onResume");
         super.onResume();
+        /**
+         * 如果不是第一次可见但是还没有init，说明是第一个fragment，
+         * 在firstVisible时initView没有执行因为先执行了setUserVisibleHint，
+         * 需要在onResume时在调用一次onFirstVisible
+         */
+        if(!firstVisible && !init){
+            onFirstVisible();
+        }
     }
 
     @Override
@@ -126,11 +134,18 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public synchronized void initPrepare(){
-        if(!prepared){
+        if(prepared){
+            init = true;
             onFirstVisible();
-        }else {
-            prepared = true;
         }
+    }
+
+    /**
+     * 设置初始化完成标志
+     * @param prepared
+     */
+    protected void setPrepared(boolean prepared){
+        this.prepared = prepared;
     }
 
     public abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
@@ -139,6 +154,8 @@ public abstract class BaseFragment extends Fragment {
 
 
     public abstract String getLogTitle();
+
+    public abstract String getTitle();
 
     protected boolean logLife(){
         return false;

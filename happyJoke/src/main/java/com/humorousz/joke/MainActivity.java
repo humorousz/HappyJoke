@@ -36,11 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
         List<BaseFragment> fragments = new ArrayList<>();
+        fragments.add(new JokeFragment());
         fragments.add(NewsFragment.newInstance(INewsPresenter.TYPE.HUABIAN));
         fragments.add(NewsFragment.newInstance(INewsPresenter.TYPE.GUONEI));
         fragments.add(new JokeFragment());
         mAdapter = new HomePagerAdapter(getSupportFragmentManager(),fragments);
         mFragmentPager.setAdapter(mAdapter);
+        mFragmentPager.setOffscreenPageLimit(4);
         mTablayout.setupWithViewPager(mFragmentPager);
         mTablayout.setTabMode(TabLayout.MODE_FIXED);
     }

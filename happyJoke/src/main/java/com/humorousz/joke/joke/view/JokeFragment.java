@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,7 +57,6 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
         super.onResume();
         mPresenter.onResume();
     }
-
     @Override
     public void initView(View root) {
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
@@ -69,6 +69,7 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
         mRecyclerView.addItemDecoration(new LinearItemDecoration());
         mRecyclerView.addOnScrollListener(mListener);
         registerForContextMenu(mRecyclerView);
+        setPrepared(true);
     }
 
     RecyclerViewStateListener mListener = new RecyclerViewStateListener() {
@@ -103,8 +104,25 @@ public class JokeFragment extends BaseRefreshFragment implements IJokeView {
     }
 
     @Override
+    protected void onVisible() {
+        Logger.d(TAG,"onVisible");
+        super.onVisible();
+    }
+
+    @Override
+    protected void onInVisible() {
+        Logger.d(TAG,"onInVisible");
+        super.onInVisible();
+    }
+
+    @Override
     public String getLogTitle() {
         return TAG;
+    }
+
+    @Override
+    public String getTitle() {
+        return "笑话";
     }
 
     @Override

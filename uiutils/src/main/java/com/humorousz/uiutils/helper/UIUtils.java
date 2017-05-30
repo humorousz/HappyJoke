@@ -7,6 +7,7 @@ import com.humorousz.commonutils.service.CommonService;
  */
 
 public class UIUtils {
+
     public static final int dip2px(int dip) {
         if(CommonService.getApplication() == null ){
             return -1;
