@@ -41,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
         NewsFragment.Config config = new NewsFragment.Config(RequestAPI.getInstance().GET_GUONEI,"国内");
         NewsFragment.Config config2 = new NewsFragment.Config(RequestAPI.getInstance().GET_HUABIAN,"娱乐花边");
         NewsFragment.Config config3 = new NewsFragment.Config(RequestAPI.getInstance().GET_HEALTH,"健康");
+        NewsFragment.Config config4 = new NewsFragment.Config(RequestAPI.getInstance().GET_MEINV,"美女");
         fragments.add(NewsFragment.newInstance(config));
         fragments.add(NewsFragment.newInstance(config2));
         fragments.add(NewsFragment.newInstance(config3));
+        fragments.add(NewsFragment.newInstance(config4));
         mAdapter = new HomePagerAdapter(getSupportFragmentManager(),fragments);
         mFragmentPager.setAdapter(mAdapter);
         mFragmentPager.setOffscreenPageLimit(4);
