@@ -10,6 +10,7 @@ public class RequestAPI {
     public String GET_JOKE = TIANXINGBASE + "/txapi/joke" + KEY;
     public String GET_GUONEI = TIANXINGBASE + "/guonei" + KEY;
     public String GET_HUABIAN = TIANXINGBASE + "/huabian" + KEY;
+    public String GET_HEALTH = TIANXINGBASE +"/health" + KEY;
 
     private RequestAPI(){
     }

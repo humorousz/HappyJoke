@@ -29,40 +29,26 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView {
     private NewsAdapter mAdapter;
     private INewsPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private INewsPresenter.TYPE mType;
-    private String mTitle;
+    private Config mConfig;
 
 
-    public static NewsFragment newInstance(INewsPresenter.TYPE type) {
+    public static NewsFragment newInstance(Config config) {
 
-        Bundle args = new Bundle();
-        args.putSerializable("type", type);
         NewsFragment fragment = new NewsFragment();
-        fragment.setArguments(args);
-        fragment.setTitle(getTitle(type));
+        fragment.setConfig(config);
         return fragment;
     }
 
-    private static String getTitle(INewsPresenter.TYPE type) {
-        switch (type) {
-            case GUONEI:
-                return "国内";
-            case HUABIAN:
-                return "娱乐花边";
-            default:
-                return "新闻";
-        }
-    }
 
-    public void setTitle(String title) {
-        mTitle = title;
+
+    public void setConfig(Config config){
+        mConfig = config;
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mType = (INewsPresenter.TYPE) getArguments().getSerializable("type");
     }
 
     @Override
@@ -72,32 +58,32 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView {
 
     @Override
     protected void onFirstVisible() {
-        Logger.d(TAG, mTitle + "onFirstVisible");
+        Logger.d(TAG, mConfig.title + "onFirstVisible");
         startRefresh();
     }
 
     @Override
     protected void onFirstInvisible() {
-        Logger.d(TAG, mTitle + "onFirstInvisible");
+        Logger.d(TAG, mConfig.title + "onFirstInvisible");
         super.onFirstInvisible();
     }
 
     @Override
     protected void onVisible() {
-        Logger.d(TAG, mTitle + "onVisible:" + init);
+        Logger.d(TAG, mConfig.title + "onVisible:" + init);
         super.onVisible();
     }
 
     @Override
     protected void onInVisible() {
-        Logger.d(TAG, mTitle + "onInVisible");
+        Logger.d(TAG, mConfig.title + "onInVisible");
         super.onInVisible();
     }
 
     @Override
     protected void refresh() {
         isPullExecute = true;
-        mPresenter.refresh(mType);
+        mPresenter.refresh(mConfig.url);
     }
 
     @Override
@@ -126,7 +112,7 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView {
 
         @Override
         public void reachBottom() {
-            mPresenter.request(mType);
+            mPresenter.request(mConfig.url);
             isPullExecute = false;
         }
 
@@ -143,7 +129,7 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView {
 
     @Override
     public String getTitle() {
-        return mTitle;
+        return mConfig.title;
     }
 
     @Override
@@ -162,5 +148,15 @@ public class NewsFragment extends BaseRefreshFragment implements INewsView {
     @Override
     public void setFailView() {
         stopRefresh();
+    }
+
+    public static class Config{
+        private String url;
+        private String title;
+        public Config(String url,String title){
+            this.url = url;
+            this.title = title;
+        }
+
     }
 }

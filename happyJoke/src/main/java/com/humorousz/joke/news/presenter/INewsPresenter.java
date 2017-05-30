@@ -5,9 +5,6 @@ package com.humorousz.joke.news.presenter;
  */
 
 public interface INewsPresenter {
-    enum TYPE{
-        GUONEI,HUABIAN
-    }
-    void refresh(TYPE type);
-    void request(TYPE type);
+    void refresh(String url);
+    void request(String url);
 }

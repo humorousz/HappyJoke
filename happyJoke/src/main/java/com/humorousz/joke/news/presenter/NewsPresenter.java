@@ -46,14 +46,14 @@ public class NewsPresenter implements INewsPresenter {
         mNewsView = view;
     }
     @Override
-    public void refresh(TYPE type) {
+    public void refresh(String url) {
         Logger.d(TAG,"refresh");
         page = 1;
-        request(type);
+        request(url);
     }
 
     @Override
-    public void request(TYPE type) {
+    public void request(String url) {
         Logger.d(TAG,"request");
         if(isRequest)
             return;
@@ -61,7 +61,6 @@ public class NewsPresenter implements INewsPresenter {
         final HashMap<String,String> params = new HashMap<>();
         params.put("num",String.valueOf(20));
         params.put("page",String.valueOf(page++));
-        String url = getRequestURL(type);
         if(TextUtils.isEmpty(url)){
             Logger.e(TAG,"wrong type for request");
             return;
@@ -84,16 +83,5 @@ public class NewsPresenter implements INewsPresenter {
                 mHandler.sendMessage(message);
             }
         },10);
-    }
-
-    private String getRequestURL(TYPE type){
-        switch (type){
-            case GUONEI:
-                return RequestAPI.getInstance().GET_GUONEI;
-            case HUABIAN:
-                return RequestAPI.getInstance().GET_HUABIAN;
-        }
-
-        return null;
     }
 }

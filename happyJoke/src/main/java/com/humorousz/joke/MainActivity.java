@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.humorousz.joke.base.BaseFragment;
 
+import com.humorousz.joke.base.api.RequestAPI;
 import com.humorousz.joke.joke.view.JokeFragment;
 import com.humorousz.joke.news.presenter.INewsPresenter;
 import com.humorousz.joke.news.view.NewsFragment;
@@ -37,8 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         List<BaseFragment> fragments = new ArrayList<>();
         fragments.add(new JokeFragment());
-        fragments.add(NewsFragment.newInstance(INewsPresenter.TYPE.HUABIAN));
-        fragments.add(NewsFragment.newInstance(INewsPresenter.TYPE.GUONEI));
+        NewsFragment.Config config = new NewsFragment.Config(RequestAPI.getInstance().GET_GUONEI,"国内");
+        NewsFragment.Config config2 = new NewsFragment.Config(RequestAPI.getInstance().GET_HUABIAN,"娱乐花边");
+        NewsFragment.Config config3 = new NewsFragment.Config(RequestAPI.getInstance().GET_HEALTH,"健康");
+        fragments.add(NewsFragment.newInstance(config));
+        fragments.add(NewsFragment.newInstance(config2));
+        fragments.add(NewsFragment.newInstance(config3));
         mAdapter = new HomePagerAdapter(getSupportFragmentManager(),fragments);
         mFragmentPager.setAdapter(mAdapter);
         mFragmentPager.setOffscreenPageLimit(4);
