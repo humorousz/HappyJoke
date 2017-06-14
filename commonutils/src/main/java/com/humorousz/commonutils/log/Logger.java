@@ -18,5 +18,8 @@ public class Logger{
     public static void e(String tag,String msg){
         Log.e(tag,msg);
     }
+    public static void d(String tag,Object msg){
+        d(tag,String.valueOf(msg));
+    }
 
 }
